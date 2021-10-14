@@ -1,5 +1,5 @@
 baseURL: "https://dhruvhirani.netlify.app/"
-title: PaperMod
+title: Dhruv Hirani
 paginate: 5
 theme: hugo-PaperMod
 
@@ -9,7 +9,7 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 enableEmoji: true
-# googleAnalytics: UA-123-45
+googleAnalytics: G-HCM6RL1T91
 
 minify:
     disableXML: true
@@ -133,9 +133,9 @@ params:
             - PaperMod is based on theme [Paper](https://github.com/nanxiaobei/hugo-paper).
     socialIcons:
         - name: github
-          url: "https://github.com/adityatelange/hugo-PaperMod"
-        - name: KoFi
-          url: "https://ko-fi.com/adityatelange"
+          url: "https://github.com/dhruvph"
+        - name: linkedin
+          url: "https://www.linkedin.com/in/dhruvhirani/"
         - name: RsS
           url: "index.xml"
 
