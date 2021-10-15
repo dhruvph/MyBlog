@@ -1,5 +1,5 @@
 baseURL: "https://dhruvhirani.netlify.app/"
-title: Dhruv Hirani
+title: dhirani
 paginate: 5
 theme: hugo-PaperMod
 
@@ -34,24 +34,24 @@ languages:
                   url: categories/
                   weight: 10
 
-    fr:
-        languageName: ":fr:"
-        languageAltTitle: French
-        weight: 2
-        title: PaperModL2
-        profileMode:
-            enabled: true
-            title: PaperMod
-            # imageUrl: "#"
-            # imageTitle: my image
-            # imageWidth: 120
-            # imageHeight: 120
-            subtitle: "☄️ Fast | ☁️ Fluent | 🌙 Smooth | 📱 Responsive"
-            buttons:
-                - name: Blog
-                  url: posts
-                - name: Tags
-                  url: tags
+    # fr:
+    #     languageName: ":fr:"
+    #     languageAltTitle: French
+    #     weight: 2
+    #     title: PaperModL2
+    #     profileMode:
+    #         enabled: true
+    #         title: PaperMod
+    #         # imageUrl: "#"
+    #         # imageTitle: my image
+    #         # imageWidth: 120
+    #         # imageHeight: 120
+    #         subtitle: "☄️ Fast | ☁️ Fluent | 🌙 Smooth | 📱 Responsive"
+    #         buttons:
+    #             - name: Blog
+    #               url: posts
+    #             - name: Tags
+    #               url: tags
         menu:
             main:
                 - name: Archive
@@ -66,25 +66,25 @@ languages:
                 - name: Series
                   url: series
                   weight: 10
-                - name: NullLink
-                  url: "#"
-                - name: NullLink2
-                  url: "#"
-                - name: NullLink3
-                  url: "#"
+                # - name: NullLink
+                #   url: "#"
+                # - name: NullLink2
+                #   url: "#"
+                # - name: NullLink3
+                #   url: "#"
 
-    fa:
-        languagedirection: rtl
-        weight: 3
-        title: PaperMod RTL
-        homeInfoParams:
-            Title: "Hi there \U0001F44B"
-            Content: Welcome to RTL layout
-        menu:
-            main:
-                - name: Tags
-                  url: tags
-                  weight: 10
+    # fa:
+    #     languagedirection: rtl
+    #     weight: 3
+    #     title: PaperMod RTL
+    #     homeInfoParams:
+    #         Title: "Hi there \U0001F44B"
+    #         Content: Welcome to RTL layout
+    #     menu:
+    #         main:
+    #             - name: Tags
+    #               url: tags
+    #               weight: 10
 
 outputs:
     home:
@@ -95,7 +95,7 @@ outputs:
 params:
     env: production # to enable google analytics, opengraph, twitter-cards and schema.
     description: "Theme PaperMod - https://github.com/adityatelange/hugo-PaperMod"
-    author: Theme PaperMod
+    author: Dhruv Hirani
     # author: ["Me", "You"] # multiple authors
 
     defaultTheme: auto
@@ -125,19 +125,15 @@ params:
               url: tags
 
     homeInfoParams:
-        Title: "PaperMod"
-        Content: >
-            Welcome to demo of hugo's theme PaperMod.
-            - **PaperMod** is a simple but fast and responsive theme with useful feature-set that enhances UX.
-            - Do give a 🌟 on Github !
-            - PaperMod is based on theme [Paper](https://github.com/nanxiaobei/hugo-paper).
+        Title: "Dhruv Hirani"
+        Content: "Welcome to my blog \U0001F44B"
     socialIcons:
         - name: github
           url: "https://github.com/dhruvph"
         - name: linkedin
           url: "https://www.linkedin.com/in/dhruvhirani/"
-        - name: RsS
-          url: "index.xml"
+        # - name: RsS
+        #   url: "index.xml"
 
     editPost:
         URL: "https://github.com/adityatelange/hugo-PaperMod/tree/exampleSite/content"

@@ -1,5 +1,5 @@
 ---
-title: "Hello R Markdown"
+title: "US Non-residential Construction Contractors by Trade"
 author: "Dhruv Hirani"
 date: 2020-12-01T21:13:14-05:00
 categories: ["R"]
@@ -8,6 +8,7 @@ tags: ["R Markdown", "plot", "regression"]
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+fredr_set_key("6768618a57f9bde9225c56b25c405e2d")
 ```
 
 # R Markdown
@@ -16,10 +17,100 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 
 You can embed an R code chunk like this:
 
-```{r cars}
-summary(cars)
-fit <- lm(dist ~ speed, data = cars)
-fit
+```{r datatable}
+
+library(fredr)
+library(dplyr)
+library(purrr)
+library(devtools)
+# install_github("mikeasilva/blsAPI")
+library(blsAPI)
+library(rjson)
+
+
+payload <- list( 'seriesid' = c( "PCU236400236400"
+                              , "PCU2364002364001"
+                              , "PCU23640023640011"
+                              , "PCU23640023640012"
+                              , "PCU23640023640013"
+                              , "PCU23640023640014"
+                              , "PCU236400236400221"
+                              , "PCU2364002364002211"
+                              , "PCU2364002364002212"
+                              , "PCU2364002364002213"
+                              , "PCU2364002364002214"
+                              , "PCU236400236400222"
+                              , "PCU2364002364002221"
+                              , "PCU2364002364002222"
+                              , "PCU2364002364002223"
+                              , "PCU2364002364002224"
+                              , "PCU236400236400223"
+                              , "PCU2364002364002231"
+                              , "PCU2364002364002232"
+                              , "PCU2364002364002233"
+                              , "PCU2364002364002234"
+                              , "PCU236400236400224"
+                              , "PCU2364002364002241"
+                              , "PCU2364002364002242"
+                              , "PCU2364002364002243"
+                              , "PCU2364002364002244"
+                              )
+              , 'startyear' = 2010
+              , 'endyear' = 2030
+              , 'registrationKey' = '4a8550fc62c4439e9629d8143ec319ec'
+            )
+
+
+
+response <- blsAPI(payload, 2, return_data_frame = TRUE)
+
+
+# ## Process results - JSON Method
+# apiDF <- function(data){
+#   df <- data.frame(year=character(),
+#                    period=character(),
+#                    periodName=character(),
+#                    value=character(),
+#                    stringsAsFactors=FALSE)
+#   
+#   i <- 0
+#   for(d in data){
+#     i <- i + 1
+#     df[i,] <- unlist(d)
+#   }
+#   return(df)
+# }
+
+# json <- fromJSON(response)
+# nrb_all <- apiDF(json$Results$series[[1]]$data)
+# nrb_gc <- apiDF(json$Results$series[[2]]$data)
+# nrb_gc_ne <- apiDF(json$Results$series[[3]]$data)
+# nrb_gc_s <- apiDF(json$Results$series[[4]]$data)
+# nrb_gc_mw <- apiDF(json$Results$series[[5]]$data)
+# nrb_gc_w <- apiDF(json$Results$series[[6]]$data)
+# nrb_mp <- apiDF(json$Results$series[[7]]$data)
+# nrb_mp_ne <- apiDF(json$Results$series[[8]]$data)
+# nrb_mp_s <- apiDF(json$Results$series[[9]]$data)
+# nrb_mp_mw <- apiDF(json$Results$series[[10]]$data)
+# nrb_mp_w <- apiDF(json$Results$series[[11]]$data)
+# nrb_el <- apiDF(json$Results$series[[12]]$data)
+# nrb_el_ne <- apiDF(json$Results$series[[13]]$data)
+# nrb_el_s <- apiDF(json$Results$series[[14]]$data)
+# nrb_el_mw <- apiDF(json$Results$series[[15]]$data)
+# nrb_el_w <- apiDF(json$Results$series[[16]]$data)
+# nrb_roof <- apiDF(json$Results$series[[17]]$data)
+# nrb_roof_ne <- apiDF(json$Results$series[[18]]$data)
+# nrb_roof_s <- apiDF(json$Results$series[[19]]$data)
+# nrb_roof_mw <- apiDF(json$Results$series[[20]]$data)
+# nrb_roof_w <- apiDF(json$Results$series[[21]]$data)
+# nrb_cs <- apiDF(json$Results$series[[22]]$data)
+# nrb_cs_ne <- apiDF(json$Results$series[[23]]$data)
+# nrb_cs_s <- apiDF(json$Results$series[[24]]$data)
+# nrb_cs_mw <- apiDF(json$Results$series[[25]]$data)
+# nrb_cs_w <- apiDF(json$Results$series[[25]]$data)
+
+
+
 ```
 
 # Including Plots
@@ -34,4 +125,5 @@ pie(
   col = c('#0292D8', '#F7EA39', '#C4B632'),
   init.angle = -50, border = NA
 )
+
 ```
