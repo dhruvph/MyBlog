@@ -52,6 +52,7 @@ languages:
     #               url: posts
     #             - name: Tags
     #               url: tags
+<<<<<<< HEAD
         # menu:
         #     main:
         #         - name: Archive
@@ -72,6 +73,28 @@ languages:
         #         #   url: "#"
         #         # - name: NullLink3
         #         #   url: "#"
+=======
+        menu:
+            main:
+                - name: Archive
+                  url: archives/
+                  weight: 5
+                - name: Tags
+                  url: tags
+                  weight: 10
+                - name: Categories
+                  url: categories
+                  weight: 10
+                - name: Series
+                  url: series
+                  weight: 10
+                # - name: NullLink
+                #   url: "#"
+                # - name: NullLink2
+                #   url: "#"
+                # - name: NullLink3
+                #   url: "#"
+>>>>>>> 9138caefdc79d8c620a03afa6964cd8009a2e775
 
     # fa:
     #     languagedirection: rtl
