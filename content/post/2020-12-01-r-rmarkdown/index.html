@@ -1,7 +1,7 @@
 ---
 title: "US Non-residential Construction Contractors by Trade"
 author: "Dhruv Hirani"
-date: 2020-12-01T21:13:14-05:00
+date: 2021-10-15T21:13:14-05:00
 categories: ["R"]
 tags: ["contractors", "region", "construction"]
 ---
@@ -13,17 +13,9 @@ tags: ["contractors", "region", "construction"]
 <h1>Tables</h1>
 <p>This is a brief summary with R code of latest tables for contractor types by US regions.</p>
 <div id="retrieval-of-data-from-us-bureau-of-labor-statistics-using-blsapi-library." class="section level2">
-<h2>Retrieval of data from Us Bureau of Labor Statistics using <code>blsAPI</code> library.</h2>
-<pre class="r"><code>
-# library(fredr)
-# library(dplyr)
-# library(purrr)
-# library(devtools)
-# install_github(&quot;mikeasilva/blsAPI&quot;)
+<h2>Retrieval of data from US Bureau of Labor Statistics using <code>blsAPI</code> library.</h2>
+<pre class="r"><code># install_github(&quot;mikeasilva/blsAPI&quot;)
 library(blsAPI)
-# library(rjson)
-
-
 payload &lt;- list( &#39;seriesid&#39; = c( &quot;PCU236400236400&quot;
                               , &quot;PCU2364002364001&quot;
                               , &quot;PCU23640023640011&quot;
@@ -53,57 +45,9 @@ payload &lt;- list( &#39;seriesid&#39; = c( &quot;PCU236400236400&quot;
                               )
               , &#39;startyear&#39; = 2010
               , &#39;endyear&#39; = 2030
-              , &#39;registrationKey&#39; = &#39;4a8550fc62c4439e9629d8143ec319ec&#39;
+              , &#39;registrationKey&#39; = mykey
             )
-
-
-
 response &lt;- blsAPI(payload, 2, return_data_frame = TRUE)
-
-
-# ## Process results - JSON Method
-# apiDF &lt;- function(data){
-#   df &lt;- data.frame(year=character(),
-#                    period=character(),
-#                    periodName=character(),
-#                    value=character(),
-#                    stringsAsFactors=FALSE)
-#   
-#   i &lt;- 0
-#   for(d in data){
-#     i &lt;- i + 1
-#     df[i,] &lt;- unlist(d)
-#   }
-#   return(df)
-# }
-
-# json &lt;- fromJSON(response)
-# nrb_all &lt;- apiDF(json$Results$series[[1]]$data)
-# nrb_gc &lt;- apiDF(json$Results$series[[2]]$data)
-# nrb_gc_ne &lt;- apiDF(json$Results$series[[3]]$data)
-# nrb_gc_s &lt;- apiDF(json$Results$series[[4]]$data)
-# nrb_gc_mw &lt;- apiDF(json$Results$series[[5]]$data)
-# nrb_gc_w &lt;- apiDF(json$Results$series[[6]]$data)
-# nrb_mp &lt;- apiDF(json$Results$series[[7]]$data)
-# nrb_mp_ne &lt;- apiDF(json$Results$series[[8]]$data)
-# nrb_mp_s &lt;- apiDF(json$Results$series[[9]]$data)
-# nrb_mp_mw &lt;- apiDF(json$Results$series[[10]]$data)
-# nrb_mp_w &lt;- apiDF(json$Results$series[[11]]$data)
-# nrb_el &lt;- apiDF(json$Results$series[[12]]$data)
-# nrb_el_ne &lt;- apiDF(json$Results$series[[13]]$data)
-# nrb_el_s &lt;- apiDF(json$Results$series[[14]]$data)
-# nrb_el_mw &lt;- apiDF(json$Results$series[[15]]$data)
-# nrb_el_w &lt;- apiDF(json$Results$series[[16]]$data)
-# nrb_roof &lt;- apiDF(json$Results$series[[17]]$data)
-# nrb_roof_ne &lt;- apiDF(json$Results$series[[18]]$data)
-# nrb_roof_s &lt;- apiDF(json$Results$series[[19]]$data)
-# nrb_roof_mw &lt;- apiDF(json$Results$series[[20]]$data)
-# nrb_roof_w &lt;- apiDF(json$Results$series[[21]]$data)
-# nrb_cs &lt;- apiDF(json$Results$series[[22]]$data)
-# nrb_cs_ne &lt;- apiDF(json$Results$series[[23]]$data)
-# nrb_cs_s &lt;- apiDF(json$Results$series[[24]]$data)
-# nrb_cs_mw &lt;- apiDF(json$Results$series[[25]]$data)
-# nrb_cs_w &lt;- apiDF(json$Results$series[[25]]$data)
 </code></pre>
 </div>
 </div>
