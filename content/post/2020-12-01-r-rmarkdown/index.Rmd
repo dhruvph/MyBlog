@@ -108,9 +108,6 @@ response2$period <-gsub("M","",response2$period)
 response2$date <- as.Date(with(response2, paste(year, period, "1", sep="-")), "%Y-%m-%d")
 
 
-response2 %>% ggplot(response2, aes(date, value))
-+ geomplot()
-
 ```
 
 # Including Plots

@@ -15,7 +15,19 @@ tags: ["contractors", "region", "construction"]
 <div id="retrieval-of-data-from-us-bureau-of-labor-statistics-using-blsapi-library." class="section level2">
 <h2>Retrieval of data from US Bureau of Labor Statistics using <code>blsAPI</code> library.</h2>
 <pre class="r"><code># install_github(&quot;mikeasilva/blsAPI&quot;)
+
 library(blsAPI)
+library(ggplot2)
+library(dplyr)
+## 
+## Attaching package: &#39;dplyr&#39;
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag
+## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union
+
 payload &lt;- list( &#39;seriesid&#39; = c( &quot;PCU236400236400&quot;
                               , &quot;PCU2364002364001&quot;
                               , &quot;PCU23640023640011&quot;
@@ -48,6 +60,55 @@ payload &lt;- list( &#39;seriesid&#39; = c( &quot;PCU236400236400&quot;
               , &#39;registrationKey&#39; = mykey
             )
 response &lt;- blsAPI(payload, 2, return_data_frame = TRUE)
+
+response2 &lt;- response
+
+response2$seriesID &lt;- as.factor(response2$seriesID)
+
+levels(response2$seriesID) &lt;-list(Contractors = &quot;PCU236400236400&quot;
+                              , GC = &quot;PCU2364002364001&quot;
+                              , GC_NE = &quot;PCU23640023640011&quot;
+                              , GC_S = &quot;PCU23640023640012&quot;
+                              , GC_MW = &quot;PCU23640023640013&quot;
+                              , GC_W = &quot;PCU23640023640014&quot;
+                              , MP = &quot;PCU236400236400221&quot;
+                              , MP_NE = &quot;PCU2364002364002211&quot;
+                              , MP_S = &quot;PCU2364002364002212&quot;
+                              , MP_MW = &quot;PCU2364002364002213&quot;
+                              , MP_NE = &quot;PCU2364002364002214&quot;
+                              , EL = &quot;PCU236400236400222&quot;
+                              , EL_NE = &quot;PCU2364002364002221&quot;
+                              , EL_S = &quot;PCU2364002364002222&quot;
+                              , EL_MW = &quot;PCU2364002364002223&quot;
+                              , EL_W = &quot;PCU2364002364002224&quot;
+                              , ROOF = &quot;PCU236400236400223&quot;
+                              , ROOF_NE = &quot;PCU2364002364002231&quot;
+                              , ROOF_S = &quot;PCU2364002364002232&quot;
+                              , ROOF_MW = &quot;PCU2364002364002233&quot;
+                              , ROOF_W = &quot;PCU2364002364002234&quot;
+                              , CS = &quot;PCU236400236400224&quot;
+                              , CS_NE = &quot;PCU2364002364002241&quot;
+                              , CS_S = &quot;PCU2364002364002242&quot;
+                              , CS_MW = &quot;PCU2364002364002243&quot;
+                              , CS_W = &quot;PCU2364002364002244&quot;
+                              )
+
+
+response2$contractorType &lt;- ifelse(grepl(&quot;MP_&quot;, response2$seriesID),&quot;Mechanical &amp; Plumbing&quot;, ifelse(
+                                   grepl(&quot;EL_&quot;, response2$seriesID),&quot;Electrical&quot;, ifelse(
+                                    grepl(&quot;CS_&quot;, response2$seriesID), &quot;Concrete and Structural&quot;,ifelse(
+                                      grepl(&quot;ROOF_&quot;, response2$seriesID),&quot;ROOFING&quot;, ifelse(
+                                        grepl(&quot;GC&quot;, response2$seriesID),&quot;General Contractor&quot;, &quot;Contractor&quot;))))
+                                   )
+                                         
+response2$region &lt;- ifelse(grepl(&quot;_NE&quot;, response2$seriesID),&quot;Northeast&quot;, ifelse(
+                                   grepl(&quot;_S&quot;, response2$seriesID),&quot;South&quot;, ifelse(
+                                    grepl(&quot;_MW&quot;, response2$seriesID), &quot;Midwest&quot;, ifelse(
+                                    grepl(&quot;_W&quot;, response2$seriesID), &quot;West&quot;, &quot;All&quot;)))
+                                  )
+response2$period &lt;-gsub(&quot;M&quot;,&quot;&quot;,response2$period)
+
+response2$date &lt;- as.Date(with(response2, paste(year, period, &quot;1&quot;, sep=&quot;-&quot;)), &quot;%Y-%m-%d&quot;)
 </code></pre>
 </div>
 </div>
