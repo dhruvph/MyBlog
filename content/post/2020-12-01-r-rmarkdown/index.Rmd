@@ -105,18 +105,10 @@ response2$region <- ifelse(grepl("_NE$", response2$seriesID),"Northeast", ifelse
                                     grepl("_W$", response2$seriesID), "West", "All")))
                                   )
 response2$period <-gsub("M","",response2$period)
-
 response2$date <- as.Date(with(response2, paste(year, period, "1", sep="-")), "%Y-%m-%d")
-
 response2$contractorType <- as.factor(response2$contractorType)
 response2$region <- as.factor(response2$region)
-
 response2$value <- as.numeric(response2$value)
-
-# myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
-#   geom_point() +
-#   geom_path()
-
 
 response2 %>%
   plot_ly(x = ~date, y = ~value, type="scatter", color= ~contractorType, mode = 'lines+markers',
