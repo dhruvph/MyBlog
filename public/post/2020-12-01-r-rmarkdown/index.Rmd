@@ -96,7 +96,7 @@ response2$contractorType <- ifelse(grepl("MP_", response2$seriesID),"Mechanical 
                                    grepl("EL_", response2$seriesID),"Electrical", ifelse(
                                     grepl("CS_", response2$seriesID), "Concrete and Structural",ifelse(
                                       grepl("ROOF_", response2$seriesID),"Roofing", ifelse(
-                                        grepl("GC", response2$seriesID),"General Contractor", "Contractor"))))
+                                        grepl("GC", response2$seriesID),"General Contractor", "All Contractors"))))
                                    )
                                          
 response2$region <- ifelse(grepl("_NE", response2$seriesID),"Northeast", ifelse(
@@ -151,6 +151,7 @@ response2 %>%
         )
       )
       ))
+
 
 ```
 

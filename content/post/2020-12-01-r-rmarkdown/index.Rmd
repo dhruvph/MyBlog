@@ -92,17 +92,17 @@ levels(response2$seriesID) <-list(Contractors = "PCU236400236400"
                               )
 
 
-response2$contractorType <- ifelse(grepl("MP_", response2$seriesID),"Mechanical & Plumbing", ifelse(
-                                   grepl("EL_", response2$seriesID),"Electrical", ifelse(
-                                    grepl("CS_", response2$seriesID), "Concrete and Structural",ifelse(
-                                      grepl("ROOF_", response2$seriesID),"Roofing", ifelse(
-                                        grepl("GC", response2$seriesID),"General Contractor", "Contractor"))))
+response2$contractorType <- ifelse(grepl("^MP", response2$seriesID),"Mechanical & Plumbing", ifelse(
+                                   grepl("^EL", response2$seriesID),"Electrical", ifelse(
+                                    grepl("^CS", response2$seriesID), "Concrete and Structural",ifelse(
+                                      grepl("^ROOF", response2$seriesID),"Roofing", ifelse(
+                                        grepl("^GC", response2$seriesID),"General Contractor", "All Contractors"))))
                                    )
                                          
-response2$region <- ifelse(grepl("_NE", response2$seriesID),"Northeast", ifelse(
-                                   grepl("_S", response2$seriesID),"South", ifelse(
-                                    grepl("_MW", response2$seriesID), "Midwest", ifelse(
-                                    grepl("_W", response2$seriesID), "West", "All")))
+response2$region <- ifelse(grepl("_NE$", response2$seriesID),"Northeast", ifelse(
+                                   grepl("_S$", response2$seriesID),"South", ifelse(
+                                    grepl("_MW$", response2$seriesID), "Midwest", ifelse(
+                                    grepl("_W$", response2$seriesID), "West", "All")))
                                   )
 response2$period <-gsub("M","",response2$period)
 
@@ -119,7 +119,6 @@ response2$value <- as.numeric(response2$value)
 
 
 response2 %>%
-  group_by(region, contractorType) %>%
   plot_ly(x = ~date, y = ~value, type="scatter", color= ~contractorType, mode = 'lines+markers',
           transforms = list(
       list(
@@ -151,6 +150,7 @@ response2 %>%
         )
       )
       ))
+
 
 ```
 
