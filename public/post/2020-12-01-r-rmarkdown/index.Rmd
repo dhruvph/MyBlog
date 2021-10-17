@@ -18,12 +18,13 @@ This is a brief summary with R code of latest tables for contractor types by US 
 
 ## Retrieval of data from US Bureau of Labor Statistics using `blsAPI` library.
 
-```{r datatable, warning=FALSE}
+```{r datatable, warning=FALSE, message=FALSE, error=FALSE}
 # install_github("mikeasilva/blsAPI")
 
 library(blsAPI)
-library(ggplot2)
+# library(ggplot2)
 library(dplyr)
+library(plotly)
 
 payload <- list( 'seriesid' = c( "PCU236400236400"
                               , "PCU2364002364001"
@@ -112,33 +113,44 @@ response2$region <- as.factor(response2$region)
 
 response2$value <- as.numeric(response2$value)
 
-summary(response2)
+# myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
+#   geom_point() +
+#   geom_path()
 
-myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
-  geom_point() +
-  geom_path()
 
-# library(plotly)
-# 
-# response2 %>% 
-#   group_by(region, contractorType) %>% 
-#   plot_ly(x=~date, y = ~value, group=~region, type="scatter", color= ~contractorType)
-
-plot(myPlot)
+response2 %>%
+  group_by(region, contractorType) %>%
+  plot_ly(x = ~date, y = ~value, type="scatter", color= ~contractorType, mode = 'lines+markers',
+          transforms = list(
+      list(
+        type = 'filter',
+        target = ~region,
+        operation = '=',
+        value = unique(response2$region)[1]
+      ))) %>% layout(
+      updatemenus = list(
+      list(
+        type = 'dropdown',
+        active = 0,
+        buttons = list(
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(response2$region)[1]),
+               label = unique(response2$region)[1]),
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(response2$region)[2]),
+               label = unique(response2$region)[2]),
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(response2$region)[3]),
+               label = unique(response2$region)[3]),
+          list(method = "restyle",
+               args = list("transforms[0].value", unique(response2$region)[4]),
+               label = unique(response2$region)[4]),
+         list(method = "restyle",
+               args = list("transforms[0].value", unique(response2$region)[5]),
+               label = unique(response2$region)[5])
+        )
+      )
+      ))
 
 ```
 
-# Including Plots
-
-You can also embed plots. See Figure \@ref(fig:pie) for example:
-
-```{r pie, fig.cap='A fancy pie chart.', tidy=FALSE}
-par(mar = c(0, 1, 0, 1))
-pie(
-  c(280, 60, 20),
-  c('Sky', 'Sunny side of pyramid', 'Shady side of pyramid'),
-  col = c('#0292D8', '#F7EA39', '#C4B632'),
-  init.angle = -50, border = NA
-)
-
-```
