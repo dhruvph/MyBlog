@@ -94,7 +94,7 @@ levels(response2$seriesID) <-list(Contractors = "PCU236400236400"
 response2$contractorType <- ifelse(grepl("MP_", response2$seriesID),"Mechanical & Plumbing", ifelse(
                                    grepl("EL_", response2$seriesID),"Electrical", ifelse(
                                     grepl("CS_", response2$seriesID), "Concrete and Structural",ifelse(
-                                      grepl("ROOF_", response2$seriesID),"ROOFING", ifelse(
+                                      grepl("ROOF_", response2$seriesID),"Roofing", ifelse(
                                         grepl("GC", response2$seriesID),"General Contractor", "Contractor"))))
                                    )
                                          
@@ -107,6 +107,24 @@ response2$period <-gsub("M","",response2$period)
 
 response2$date <- as.Date(with(response2, paste(year, period, "1", sep="-")), "%Y-%m-%d")
 
+response2$contractorType <- as.factor(response2$contractorType)
+response2$region <- as.factor(response2$region)
+
+response2$value <- as.numeric(response2$value)
+
+summary(response2)
+
+# myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
+#   geom_point() +
+#   geom_path()
+
+library(plotly)
+
+response2 %>% 
+  group_by(region, contractorType) %>% 
+  plot_ly(x=~date, y = ~value, group=~region, type="scatter", color= ~contractorType)
+
+plot(myPlot)
 
 ```
 
