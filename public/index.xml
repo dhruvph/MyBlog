@@ -8,6 +8,17 @@
       <url>https://dhruvhirani.netlify.app/papermod-cover.png</url>
       <link>https://dhruvhirani.netlify.app/papermod-cover.png</link>
     </image>
-    <generator>Hugo -- gohugo.io</generator><atom:link href="https://dhruvhirani.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <generator>Hugo -- gohugo.io</generator>
+    <lastBuildDate>Fri, 15 Oct 2021 21:13:14 -0500</lastBuildDate><atom:link href="https://dhruvhirani.netlify.app/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>US Non-residential Construction Contractors by Trade</title>
+      <link>https://dhruvhirani.netlify.app/post/2020-12-01-r-rmarkdown/</link>
+      <pubDate>Fri, 15 Oct 2021 21:13:14 -0500</pubDate>
+      
+      <guid>https://dhruvhirani.netlify.app/post/2020-12-01-r-rmarkdown/</guid>
+      <description>TablesThis is a brief summary with R code of latest tables for contractor types by US regions.
+Retrieval of data from US Bureau of Labor Statistics using blsAPI library.# install_github(&amp;quot;mikeasilva/blsAPI&amp;quot;)library(blsAPI)library(ggplot2)library(dplyr)## ## Attaching package: &amp;#39;dplyr&amp;#39;## The following objects are masked from &amp;#39;package:stats&amp;#39;:## ## filter, lag## The following objects are masked from &amp;#39;package:base&amp;#39;:## ## intersect, setdiff, setequal, unionpayload &amp;lt;- list( &amp;#39;seriesid&amp;#39; = c( &amp;quot;PCU236400236400&amp;quot;, &amp;quot;PCU2364002364001&amp;quot;, &amp;quot;PCU23640023640011&amp;quot;, &amp;quot;PCU23640023640012&amp;quot;, &amp;quot;PCU23640023640013&amp;quot;, &amp;quot;PCU23640023640014&amp;quot;, &amp;quot;PCU236400236400221&amp;quot;, &amp;quot;PCU2364002364002211&amp;quot;, &amp;quot;PCU2364002364002212&amp;quot;, &amp;quot;PCU2364002364002213&amp;quot;, &amp;quot;PCU2364002364002214&amp;quot;, &amp;quot;PCU236400236400222&amp;quot;, &amp;quot;PCU2364002364002221&amp;quot;, &amp;quot;PCU2364002364002222&amp;quot;, &amp;quot;PCU2364002364002223&amp;quot;, &amp;quot;PCU2364002364002224&amp;quot;, &amp;quot;PCU236400236400223&amp;quot;, &amp;quot;PCU2364002364002231&amp;quot;, &amp;quot;PCU2364002364002232&amp;quot;, &amp;quot;PCU2364002364002233&amp;quot;, &amp;quot;PCU2364002364002234&amp;quot;, &amp;quot;PCU236400236400224&amp;quot;, &amp;quot;PCU2364002364002241&amp;quot;, &amp;quot;PCU2364002364002242&amp;quot;, &amp;quot;PCU2364002364002243&amp;quot;, &amp;quot;PCU2364002364002244&amp;quot;), &amp;#39;startyear&amp;#39; = 2010, &amp;#39;endyear&amp;#39; = 2030, &amp;#39;registrationKey&amp;#39; = mykey)response &amp;lt;- blsAPI(payload, 2, return_data_frame = TRUE)response2 &amp;lt;- responseresponse2$seriesID &amp;lt;- as.</description>
+    </item>
+    
   </channel>
 </rss>

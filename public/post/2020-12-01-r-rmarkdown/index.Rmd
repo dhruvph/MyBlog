@@ -1,31 +1,29 @@
 ---
 title: "US Non-residential Construction Contractors by Trade"
 author: "Dhruv Hirani"
-date: 2020-12-01T21:13:14-05:00
+date: 2021-10-15T21:13:14-05:00
 categories: ["R"]
-tags: ["R Markdown", "plot", "regression"]
+tags: ["contractors", "region", "construction"]
 ---
   
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE)
+mykey= '4a8550fc62c4439e9629d8143ec319ec'
+
 ```
 
-# R Markdown
+# Tables
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This is a brief summary with R code of latest tables for contractor types by US regions.
 
-You can embed an R code chunk like this:
+## Retrieval of data from US Bureau of Labor Statistics using `blsAPI` library.
 
-```{r datatable}
-
-# library(fredr)
-library(dplyr)
-library(purrr)
-library(devtools)
+```{r datatable, warning=FALSE}
 # install_github("mikeasilva/blsAPI")
-library(blsAPI)
-library(rjson)
 
+library(blsAPI)
+library(ggplot2)
+library(dplyr)
 
 payload <- list( 'seriesid' = c( "PCU236400236400"
                               , "PCU2364002364001"
@@ -56,59 +54,77 @@ payload <- list( 'seriesid' = c( "PCU236400236400"
                               )
               , 'startyear' = 2010
               , 'endyear' = 2030
-              , 'registrationKey' = '4a8550fc62c4439e9629d8143ec319ec'
+              , 'registrationKey' = mykey
             )
-
-
-
 response <- blsAPI(payload, 2, return_data_frame = TRUE)
 
+response2 <- response
 
-# ## Process results - JSON Method
-# apiDF <- function(data){
-#   df <- data.frame(year=character(),
-#                    period=character(),
-#                    periodName=character(),
-#                    value=character(),
-#                    stringsAsFactors=FALSE)
-#   
-#   i <- 0
-#   for(d in data){
-#     i <- i + 1
-#     df[i,] <- unlist(d)
-#   }
-#   return(df)
-# }
+response2$seriesID <- as.factor(response2$seriesID)
 
-# json <- fromJSON(response)
-# nrb_all <- apiDF(json$Results$series[[1]]$data)
-# nrb_gc <- apiDF(json$Results$series[[2]]$data)
-# nrb_gc_ne <- apiDF(json$Results$series[[3]]$data)
-# nrb_gc_s <- apiDF(json$Results$series[[4]]$data)
-# nrb_gc_mw <- apiDF(json$Results$series[[5]]$data)
-# nrb_gc_w <- apiDF(json$Results$series[[6]]$data)
-# nrb_mp <- apiDF(json$Results$series[[7]]$data)
-# nrb_mp_ne <- apiDF(json$Results$series[[8]]$data)
-# nrb_mp_s <- apiDF(json$Results$series[[9]]$data)
-# nrb_mp_mw <- apiDF(json$Results$series[[10]]$data)
-# nrb_mp_w <- apiDF(json$Results$series[[11]]$data)
-# nrb_el <- apiDF(json$Results$series[[12]]$data)
-# nrb_el_ne <- apiDF(json$Results$series[[13]]$data)
-# nrb_el_s <- apiDF(json$Results$series[[14]]$data)
-# nrb_el_mw <- apiDF(json$Results$series[[15]]$data)
-# nrb_el_w <- apiDF(json$Results$series[[16]]$data)
-# nrb_roof <- apiDF(json$Results$series[[17]]$data)
-# nrb_roof_ne <- apiDF(json$Results$series[[18]]$data)
-# nrb_roof_s <- apiDF(json$Results$series[[19]]$data)
-# nrb_roof_mw <- apiDF(json$Results$series[[20]]$data)
-# nrb_roof_w <- apiDF(json$Results$series[[21]]$data)
-# nrb_cs <- apiDF(json$Results$series[[22]]$data)
-# nrb_cs_ne <- apiDF(json$Results$series[[23]]$data)
-# nrb_cs_s <- apiDF(json$Results$series[[24]]$data)
-# nrb_cs_mw <- apiDF(json$Results$series[[25]]$data)
-# nrb_cs_w <- apiDF(json$Results$series[[25]]$data)
+levels(response2$seriesID) <-list(Contractors = "PCU236400236400"
+                              , GC = "PCU2364002364001"
+                              , GC_NE = "PCU23640023640011"
+                              , GC_S = "PCU23640023640012"
+                              , GC_MW = "PCU23640023640013"
+                              , GC_W = "PCU23640023640014"
+                              , MP = "PCU236400236400221"
+                              , MP_NE = "PCU2364002364002211"
+                              , MP_S = "PCU2364002364002212"
+                              , MP_MW = "PCU2364002364002213"
+                              , MP_NE = "PCU2364002364002214"
+                              , EL = "PCU236400236400222"
+                              , EL_NE = "PCU2364002364002221"
+                              , EL_S = "PCU2364002364002222"
+                              , EL_MW = "PCU2364002364002223"
+                              , EL_W = "PCU2364002364002224"
+                              , ROOF = "PCU236400236400223"
+                              , ROOF_NE = "PCU2364002364002231"
+                              , ROOF_S = "PCU2364002364002232"
+                              , ROOF_MW = "PCU2364002364002233"
+                              , ROOF_W = "PCU2364002364002234"
+                              , CS = "PCU236400236400224"
+                              , CS_NE = "PCU2364002364002241"
+                              , CS_S = "PCU2364002364002242"
+                              , CS_MW = "PCU2364002364002243"
+                              , CS_W = "PCU2364002364002244"
+                              )
 
 
+response2$contractorType <- ifelse(grepl("MP_", response2$seriesID),"Mechanical & Plumbing", ifelse(
+                                   grepl("EL_", response2$seriesID),"Electrical", ifelse(
+                                    grepl("CS_", response2$seriesID), "Concrete and Structural",ifelse(
+                                      grepl("ROOF_", response2$seriesID),"Roofing", ifelse(
+                                        grepl("GC", response2$seriesID),"General Contractor", "Contractor"))))
+                                   )
+                                         
+response2$region <- ifelse(grepl("_NE", response2$seriesID),"Northeast", ifelse(
+                                   grepl("_S", response2$seriesID),"South", ifelse(
+                                    grepl("_MW", response2$seriesID), "Midwest", ifelse(
+                                    grepl("_W", response2$seriesID), "West", "All")))
+                                  )
+response2$period <-gsub("M","",response2$period)
+
+response2$date <- as.Date(with(response2, paste(year, period, "1", sep="-")), "%Y-%m-%d")
+
+response2$contractorType <- as.factor(response2$contractorType)
+response2$region <- as.factor(response2$region)
+
+response2$value <- as.numeric(response2$value)
+
+summary(response2)
+
+myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
+  geom_point() +
+  geom_path()
+
+# library(plotly)
+# 
+# response2 %>% 
+#   group_by(region, contractorType) %>% 
+#   plot_ly(x=~date, y = ~value, group=~region, type="scatter", color= ~contractorType)
+
+plot(myPlot)
 
 ```
 

@@ -97,7 +97,7 @@ levels(response2$seriesID) &lt;-list(Contractors = &quot;PCU236400236400&quot;
 response2$contractorType &lt;- ifelse(grepl(&quot;MP_&quot;, response2$seriesID),&quot;Mechanical &amp; Plumbing&quot;, ifelse(
                                    grepl(&quot;EL_&quot;, response2$seriesID),&quot;Electrical&quot;, ifelse(
                                     grepl(&quot;CS_&quot;, response2$seriesID), &quot;Concrete and Structural&quot;,ifelse(
-                                      grepl(&quot;ROOF_&quot;, response2$seriesID),&quot;ROOFING&quot;, ifelse(
+                                      grepl(&quot;ROOF_&quot;, response2$seriesID),&quot;Roofing&quot;, ifelse(
                                         grepl(&quot;GC&quot;, response2$seriesID),&quot;General Contractor&quot;, &quot;Contractor&quot;))))
                                    )
                                          
@@ -109,7 +109,50 @@ response2$region &lt;- ifelse(grepl(&quot;_NE&quot;, response2$seriesID),&quot;N
 response2$period &lt;-gsub(&quot;M&quot;,&quot;&quot;,response2$period)
 
 response2$date &lt;- as.Date(with(response2, paste(year, period, &quot;1&quot;, sep=&quot;-&quot;)), &quot;%Y-%m-%d&quot;)
-</code></pre>
+
+response2$contractorType &lt;- as.factor(response2$contractorType)
+response2$region &lt;- as.factor(response2$region)
+
+response2$value &lt;- as.numeric(response2$value)
+
+summary(response2)
+##      year              period           periodName            value      
+##  Length:2392        Length:2392        Length:2392        Min.   : 93.6  
+##  Class :character   Class :character   Class :character   1st Qu.:102.5  
+##  Mode  :character   Mode  :character   Mode  :character   Median :108.0  
+##                                                           Mean   :110.5  
+##                                                           3rd Qu.:116.6  
+##                                                           Max.   :144.8  
+##                                                                          
+##         seriesID                    contractorType       region   
+##  MP_NE      : 184   Concrete and Structural:368    All      :552  
+##  Contractors:  92   Contractor             :460    Midwest  :460  
+##  GC         :  92   Electrical             :368    Northeast:552  
+##  GC_NE      :  92   General Contractor     :460    South    :460  
+##  GC_S       :  92   Mechanical &amp; Plumbing  :368    West     :368  
+##  GC_MW      :  92   Roofing                :368                   
+##  (Other)    :1748                                                 
+##       date           
+##  Min.   :2014-02-01  
+##  1st Qu.:2015-12-24  
+##  Median :2017-11-16  
+##  Mean   :2017-11-15  
+##  3rd Qu.:2019-10-08  
+##  Max.   :2021-09-01  
+## 
+
+myPlot &lt;- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
+  geom_point() +
+  geom_path()
+
+# library(plotly)
+# 
+# response2 %&gt;% 
+#   group_by(region, contractorType) %&gt;% 
+#   plot_ly(x=~date, y = ~value, group=~region, type=&quot;scatter&quot;, color= ~contractorType)
+
+plot(myPlot)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/datatable-1.png" width="672" /></p>
 </div>
 </div>
 <div id="including-plots" class="section level1">
