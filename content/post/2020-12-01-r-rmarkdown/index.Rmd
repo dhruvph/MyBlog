@@ -114,6 +114,7 @@ response2$value <- as.numeric(response2$value)
 
 summary(response2)
 
+<<<<<<< HEAD
 myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
   geom_point() +
   geom_path()
@@ -123,6 +124,17 @@ myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contrac
 # response2 %>% 
 #   group_by(region, contractorType) %>% 
 #   plot_ly(x=~date, y = ~value, group=~region, type="scatter", color= ~contractorType)
+=======
+# myPlot <- ggplot(response2, aes(x= date, y= value, group= region, color= contractorType)) +
+#   geom_point() +
+#   geom_path()
+
+library(plotly)
+
+response2 %>% 
+  group_by(region, contractorType) %>% 
+  plot_ly(x=~date, y = ~value, group=~region, type="scatter", color= ~contractorType)
+>>>>>>> 2377c314d7b0426c61e864b909882a413d928cab
 
 plot(myPlot)
 
